@@ -13,19 +13,20 @@ const returnRandBase = () => {
     return newStrand;
   };
   
-  // create a factory function
+  // create a factory function to create a pAequor object with methods to mutate, compare DNA, and check survival
   const pAequorFactory = (specimenNum, dna) => {
     return {
       specimenNum: specimenNum,
       dna: dna,
       mutate() {
         const dnaBases = ["A", "T", "C", "G"];
-        return dnaBases[Math.floor(Math.random() * this.dna.length)];
+        const randomIndex = Math.floor(Math.random() * this.dna.length);
+  
         let newBase;
         do {
-          newBase = bases[Math.floor(Math.random() * 4)];
-        } while (newBase === this.dna[dnaBases]);
-        this.dna[dnaBases] = newBase;
+      newBase = dnaBases[Math.floor(Math.random() * 4)];
+    } while (newBase === this.dna[randomIndex]);
+    this.dna[randomIndex] = newBase;
         return this.dna;
       },
       compareDNA(otherPAequor) {
@@ -60,16 +61,16 @@ const returnRandBase = () => {
   const survivingSpecimens = [];
   let id = 1;
   
-  while (survivingSpecimens.length < 30) {
+  for (let id = 1; survivingSpecimens.length < 30; id++) {
+  
     const newOrganism = pAequorFactory(id, mockUpStrand());
     if (newOrganism.willLikelySurvive()) {
       survivingSpecimens.push(newOrganism);
     }
-    id++;
   }
   
   // Extra Challenge
-  // create
+  // create a complementary DNA strand using method
   complementStrand() {
     return this.dna.map(base => {
       switch (base) {
